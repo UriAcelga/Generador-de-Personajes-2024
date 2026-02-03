@@ -70,6 +70,7 @@ For more details on building Windows package, refer to the [Windows Packaging Gu
  uv venv --python 3.11
  ```
  - Iniciar el entorno virtual
+
  **Powershell**
  ```
  .venv/Scripts/activate
