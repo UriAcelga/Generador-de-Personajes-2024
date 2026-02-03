@@ -59,3 +59,26 @@ flet build windows -v
 ```
 
 For more details on building Windows package, refer to the [Windows Packaging Guide](https://docs.flet.dev/publish/windows/).
+
+# Instalación para Devs
+ - Instalar [UV Package Manager](https://docs.astral.sh/uv/getting-started/installation/).
+
+ - Clonar el repositorio
+
+ - Crear entorno virtual
+ ```
+ uv venv --python 3.11
+ ```
+ - Iniciar el entorno virtual
+ **Powershell**
+ ```
+ .venv/Scripts/activate
+ ```
+ **Bash**
+ ```
+ Source .venv/Scripts/activate
+ ```
+ - Instalar dependencias
+ ```
+ uv sync
+ ```
