@@ -1,0 +1,30 @@
+[project]
+name = "generador-de-personajes-2024"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Flet developer", email = "you@example.com" }
+]
+dependencies = [
+    "flet>=0.80.5",
+    "pypdf>=6.6.2",
+    "reportlab>=4.4.9",
+]
+
+[dependency-groups]
+dev = [
+    "flet-cli>=0.80.5",
+    "flet-desktop>=0.80.5",
+    "flet-web>=0.80.5",
+]
+
+[tool.flet]
+org = "com.mycompany"
+product = "generador-de-personajes-2024"
+company = "Flet"
+copyright = "Copyright (C) 2023-2026 by Flet"
+
+[tool.flet.app]
+path = "src"
