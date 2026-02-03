@@ -2,6 +2,8 @@ import io
 from pypdf import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
+from reportlab.platypus import Paragraph, Frame
+from reportlab.lib.styles import ParagraphStyle
 from pathlib import Path
 from datetime import datetime
 
@@ -20,101 +22,108 @@ class PdfManager:
     def get_num_pages(self):
         self.reader.get_num_pages()
 
+    def print_mediabox(self):
+        box = self.reader.pages[0].mediabox
+        print(f"Ancho: {box.width}, Alto: {box.height}")
+
     def get_campos_dict(self):
         # La posición del arreglo indica la página
         # en PDF (0,0) está en la esquina inferior izquierda
         # Se saben las coordenadas usando https://pdf-cordinate-extractor.vercel.app/
-        """return [
-            {
-                "nombre": {"text": "Manolo", "pos": (40, 754, 210, 12)}
-                "trasfondo": {"text": "Vagabundo", "pos": (40, 732, 105, 12)}
-                "clase": {"text": "Guerrero", "pos": (155, 732, 90, 12)}
-                "especie": {"text": "Humano", "pos": (40, 711, 105, 12)}
-                "subclase": {"text": "Maestro de Combate", "pos": (155, 711, 90, 12)}
-
-                "nivel": {"text": "5", "pos": (270, 737, 20, 20)}
-                "CA": {"text": "18", "pos": (335, 722, 20, 43)}
-
-            }
-        ]"""
+        # restar 8 a la coordenada Y
 
         return [
             {
                 # --- ENCABEZADO (Página 1) ---
-                "NOMBRE_PERSONAJE": {"text": "Grog", "x": 30, "y": 735, "size": 14},
-                "CLASE": {"text": "Bárbaro", "x": 155, "y": 715, "size": 11},
-                "TRASFONDO": {"text": "Soldado", "x": 30, "y": 715, "size": 11},
-                "ESPECIE": {"text": "Semiorco", "x": 30, "y": 695, "size": 11},
-                "SUBCLASE": {"text": "Berserker", "x": 135, "y": 695, "size": 11},
-                "NIVEL": {"text": "3", "x": 245, "y": 715, "size": 11},
-                "PX": {"text": "900", "x": 245, "y": 695, "size": 11},
-
-                # --- ATRIBUTOS Y SALVACIONES (Página 1) ---
-                # Formato: MODIFICADOR (Grande), PUNTUACIÓN (Pequeño), SALVACIÓN (Marcador)
-                "FUERZA_MOD": {"text": "+4", "x": 28, "y": 528, "size": 22},
-                "FUERZA_SCORE": {"text": "18", "x": 58, "y": 532, "size": 10},
-                "FUERZA_SAVE": {"text": "+6", "x": 58, "y": 503, "size": 9},
-
-                "DESTREZA_MOD": {"text": "+2", "x": 28, "y": 410, "size": 22},
-                "DESTREZA_SCORE": {"text": "14", "x": 58, "y": 414, "size": 10},
-                "DESTREZA_SAVE": {"text": "+2", "x": 58, "y": 385, "size": 9},
-
-                "CONSTITUCION_MOD": {"text": "+3", "x": 28, "y": 264, "size": 22},
-                "CONSTITUCION_SCORE": {"text": "16", "x": 58, "y": 268, "size": 10},
-                "CONSTITUCION_SAVE": {"text": "+3", "x": 58, "y": 239, "size": 9},
-
-                "INTELIGENCIA_MOD": {"text": "-1", "x": 132, "y": 604, "size": 22},
-                "INTELIGENCIA_SCORE": {"text": "8", "x": 162, "y": 608, "size": 10},
-                "INTELIGENCIA_SAVE": {"text": "-1", "x": 162, "y": 579, "size": 9},
-
-                "SABIDURIA_MOD": {"text": "+1", "x": 132, "y": 432, "size": 22},
-                "SABIDURIA_SCORE": {"text": "12", "x": 162, "y": 436, "size": 10},
-                "SABIDURIA_SAVE": {"text": "+1", "x": 162, "y": 407, "size": 9},
-
-                "CARISMA_MOD": {"text": "+0", "x": 132, "y": 258, "size": 22},
-                "CARISMA_SCORE": {"text": "10", "x": 162, "y": 262, "size": 10},
-                "CARISMA_SAVE": {"text": "+0", "x": 162, "y": 233, "size": 9},
-
-                # --- HABILIDADES (Página 1 - Columna Izquierda/Centro) ---
-                "ATLETISMO": {"text": "+6", "x": 58, "y": 489, "size": 8},
-                "ACROBACIAS": {"text": "+2", "x": 58, "y": 371, "size": 8},
-                "SIGILO": {"text": "+2", "x": 58, "y": 343, "size": 8},
-                "MEDICINA": {"text": "+1", "x": 162, "y": 393, "size": 8},
-                "PERCEPCION": {"text": "+3", "x": 162, "y": 379, "size": 8},
-                "PERSPICACIA": {"text": "+1", "x": 162, "y": 365, "size": 8},
-                "INTIMIDACION": {"text": "+2", "x": 162, "y": 182, "size": 8},
-
-                # --- COMBATE Y VIDA (Página 1) ---
-                "CA": {"text": "15", "x": 315, "y": 715, "size": 20},
-                "INICIATIVA": {"text": "+2", "x": 185, "y": 665, "size": 16},
-                "VELOCIDAD": {"text": "30", "x": 245, "y": 665, "size": 16},
-                "HP_MAX": {"text": "35", "x": 455, "y": 742, "size": 10},
-                "HP_ACTUAL": {"text": "35", "x": 395, "y": 705, "size": 28},
-                "HP_TEMP": {"text": "0", "x": 475, "y": 705, "size": 18},
-                "DADOS_GOLPE_MAX": {"text": "3d12", "x": 515, "y": 742, "size": 9},
-                "DADOS_GOLPE_ACTUAL": {"text": "3", "x": 490, "y": 715, "size": 14},
-
-                # --- ARMAS (Página 1 - Sección central) ---
-                "ARMA_1_NOMBRE": {"text": "Gran Hacha", "x": 230, "y": 560, "size": 9},
-                "ARMA_1_BONIF": {"text": "+6", "x": 335, "y": 560, "size": 9},
-                "ARMA_1_DAÑO": {"text": "1d12+4 C", "x": 370, "y": 560, "size": 9},
+                "NOMBRE_PERSONAJE": {"text": "Grog", "pos": (40, 746, 200, 14), "size": 14},
+                "TRASFONDO": {"text": "Soldado", "pos": (40, 724, 100, 11), "size": 11},
+                "CLASE": {"text": "Bárbaro", "pos": (155, 724, 100, 11), "size": 11},
+                "ESPECIE": {"text": "Semiorco", "pos": (40, 703, 100, 11), "size": 11},
+                "SUBCLASE": {"text": "Berserker", "pos": (155, 703, 100, 11), "size": 11},
+                "NIVEL": {"text": "3", "pos": (270, 729, 30, 16), "size": 16},
+                "CA": {"text": "18", "pos": (325, 714, 40, 20), "size": 20},
+                "HP_MAX": {"text": "35", "pos": (450, 704, 30, 10), "size": 10},
+                "DADOS_GOLPE_MAX": {"text": "1d12", "pos": (502, 704, 40, 10), "size": 10},
                 
-                "ARMA_2_NOMBRE": {"text": "Jabalina", "x": 230, "y": 545, "size": 9},
-                "ARMA_2_BONIF": {"text": "+6", "x": 335, "y": 545, "size": 9},
-                "ARMA_2_DAÑO": {"text": "1d6+4 P", "x": 370, "y": 545, "size": 9},
+                # --- COMBATE Y ARMAS (Página 1) ---
+                "INICIATIVA": {"text": "+2", "pos": (255, 626, 40, 16), "size": 16},
+                "VELOCIDAD": {"text": "30", "pos": (350, 626, 40, 16), "size": 16},
+
+                "ARMA_1_NOMBRE": {"text": "Gran Hacha", "pos": (240, 562, 100, 9), "size": 9},
+                "ARMA_1_BONIF": {"text": "+6", "pos": (350, 562, 30, 9), "size": 9},
+                "ARMA_1_DAÑO": {"text": "1d12 cortante", "pos": (390, 562, 70, 8), "size": 8},
+                "ARMA_1_NOTAS": {"text": "", "pos": (470, 562, 120, 8), "size": 8},
+                
+                "ARMA_2_NOMBRE": {"text": "Jabalina", "pos": (240, 542, 100, 9), "size": 9},
+                "ARMA_2_BONIF": {"text": "+6", "pos": (350, 542, 30, 9), "size": 9},
+                "ARMA_2_DAÑO": {"text": "1d6 perforante", "pos": (390, 542, 70, 8), "size": 8},
+                "ARMA_2_NOTAS": {"text": "arrojable", "pos": (470, 542, 120, 8), "size": 8},
+
+                # --- ATRIBUTOS (Página 1) ---
+                "COMPETENCIA": {"text": "+2", "pos": (44, 607, 40, 22), "size": 22},
+                "FUERZA_MOD": {"text": "+4", "pos": (28, 540, 40, 22), "size": 22},
+                "FUERZA_SCORE": {"text": "18", "pos": (68, 540, 20, 10), "size": 10},
+                "FUERZA_SAVE": {"text": "+6", "pos": (29, 507, 20, 9), "size": 9},
+
+                "DESTREZA_MOD": {"text": "+2", "pos": (28, 422, 40, 22), "size": 22},
+                "DESTREZA_SCORE": {"text": "14", "pos": (68, 422, 20, 10), "size": 10},
+                "DESTREZA_SAVE": {"text": "+2", "pos": (29, 389, 20, 9), "size": 9},
+
+                "CONSTITUCION_MOD": {"text": "+3", "pos": (28, 276, 40, 22), "size": 22},
+                "CONSTITUCION_SCORE": {"text": "16", "pos": (68, 276, 20, 10), "size": 10},
+                "CONSTITUCION_SAVE": {"text": "+3", "pos": (29, 243, 20, 9), "size": 9},
+
+                "INTELIGENCIA_MOD": {"text": "-1", "pos": (138, 620, 40, 22), "size": 22},
+                "INTELIGENCIA_SCORE": {"text": "8", "pos": (178, 620, 20, 10), "size": 10},
+                "INTELIGENCIA_SAVE": {"text": "-1", "pos": (139, 584, 20, 9), "size": 9},
+
+                "SABIDURIA_MOD": {"text": "+1", "pos": (138, 444, 40, 22), "size": 22},
+                "SABIDURIA_SCORE": {"text": "12", "pos": (178, 444, 20, 10), "size": 10},
+                "SABIDURIA_SAVE": {"text": "+1", "pos": (139, 411, 20, 9), "size": 9},
+
+                "CARISMA_MOD": {"text": "+0", "pos": (138, 270, 40, 22), "size": 22},
+                "CARISMA_SCORE": {"text": "10", "pos": (178, 270, 20, 10), "size": 10},
+                "CARISMA_SAVE": {"text": "+0", "pos": (139, 237, 20, 9), "size": 9},
+
+                # --- HABILIDADES ---
+                "ATLETISMO": {"text": "+6", "pos": (29, 487, 20, 9), "size": 9},
+
+                "ACROBACIAS": {"text": "+2", "pos": (29, 370, 20, 9), "size": 9},
+                "JUEGO_DE_MANOS": {"text": "+2", "pos": (29, 356, 20, 9), "size": 9},
+                "SIGILO": {"text": "+2", "pos": (29, 342, 20, 9), "size": 9},
+
+                "CONOCIMIENTO_ARCANO": {"text": "+1", "pos": (139, 564, 20, 9), "size": 9},
+                "HISTORIA": {"text": "+1", "pos": (139, 550, 20, 9), "size": 9},
+                "INVESTIGACION": {"text": "+1", "pos": (139, 536, 20, 9), "size": 9},
+                "NATURALEZA": {"text": "+1", "pos": (139, 522, 20, 9), "size": 9},
+                "RELIGION": {"text": "+1", "pos": (139, 508, 20, 9), "size": 9},
+
+                "MEDICINA": {"text": "+1", "pos": (139, 391, 20, 9), "size": 9},
+                "PERCEPCION": {"text": "+3", "pos": (139, 377, 20, 9), "size": 9},
+                "PERSPICACIA": {"text": "+1", "pos": (139, 363, 20, 9), "size": 9},
+                "SUPERVIVENCIA": {"text": "+1", "pos": (139, 349, 20, 9), "size": 9},
+                "TRATO_CON_ANIMALES": {"text": "+1", "pos": (139, 335, 20, 9), "size": 9},
+
+                "ENGAÑO": {"text": "+2", "pos": (139, 217, 20, 9), "size": 9},
+                "INTERPRETACION": {"text": "+2", "pos": (139, 203, 20, 9), "size": 9},
+                "INTIMIDACION": {"text": "+2", "pos": (139, 189, 20, 9), "size": 9},
+                "PERSUASION": {"text": "+2", "pos": (139, 175, 20, 9), "size": 9},
             },
-
             {
-                # --- EQUIPO Y MONEDAS (Página 2) ---
-                "MONEDAS_PO": {"text": "150", "x": 440, "y": 420, "size": 11},
-                "MONEDAS_PP": {"text": "25", "x": 410, "y": 420, "size": 11},
-                "EQUIPO_LISTA": {"text": "Cota de malla, Espada larga, Escudo, Pack de explorador", "x": 380, "y": 150, "size": 11},
-
                 # --- MAGIA (Página 2) ---
-                "CD DE SALVACION DE CONJUROS": {"text": "14", "x": 320, "y": 725, "size": 11},
-                "BONIFICADOR DE ATAQUE DE CONJUROS": {"text": "+6", "x": 320, "y": 660, "size": 11},
-                "ESPACIOS_NIVEL_1_TOTAL": {"text": "4", "x": 325, "y": 630, "size": 11},
-                "ESPACIOS_NIVEL_2_TOTAL": {"text": "2", "x": 325, "y": 605, "size": 11},
+                "APTITUD": {"text": "WIS", "pos": (72, 742, 30, 14), "size": 14},
+                "APTITUD_MOD": {"text": "+1", "pos": (21, 709, 30, 14), "size": 14},
+                "CD DE SALVACION DE CONJUROS": {"text": "12", "pos": (21, 681, 30, 14), "size": 14},
+                "BONIFICADOR DE ATAQUE DE CONJUROS": {"text": "+5", "pos": (21, 653, 30, 14), "size": 14},
+                "ESPACIOS_NIVEL_1_TOTAL": {"text": "4", "pos": (187, 681, 20, 8), "size": 8},
+                "ESPACIOS_NIVEL_2_TOTAL": {"text": "2", "pos": (187, 667, 20, 8), "size": 8},
+
+                # --- EQUIPO Y MONEDAS (Página 2) ---
+                "EQUIPO_LISTA": {"text": "Cota de malla, Espada larga, Escudo, Pack de explorador", "pos": (410, 150, 150, 100), "size": 11},
+                "MONEDAS_PC": {"text": "25", "pos": (420, 52, 30, 11), "size": 11},
+                "MONEDAS_PP": {"text": "25", "pos": (457, 52, 30, 11), "size": 11},
+                "MONEDAS_PO": {"text": "110", "pos": (527, 52, 30, 11), "size": 11},
+
             }
         ]
 
@@ -140,10 +149,26 @@ class PdfManager:
     def crear_anotaciones(self):
         packet = io.BytesIO()
         cv = canvas.Canvas(packet, pagesize=letter)
+        estiloBase = ParagraphStyle(
+            name="base",
+            fontName="Helvetica",
+            leftIndent=0,
+            rightIndent=0,
+            firstLineIndent=0,
+            spaceBefore=0,
+            spaceAfter=0,
+        )
         for i in range(len(self.reader.pages)):
             for campo in self.CONFIG_CAMPOS[i].values():
-                cv.setFont("Helvetica", campo["size"])
-                cv.drawString(campo["x"], campo["y"], campo["text"])
+                x, y, w, h = campo["pos"]
+                estiloCampo = estiloBase.clone(
+                    'temp',
+                    fontSize=campo["size"],
+                    leading=campo["size"],
+                )
+                p = Paragraph(campo["text"], estiloCampo)
+                f = Frame(x, y, w, h, leftPadding=0, bottomPadding=0, rightPadding=0, topPadding=0, showBoundary=0)
+                f.addFromList([p], cv)
             cv.showPage()
         
         cv.save() #guardar cambios

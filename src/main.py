@@ -13,6 +13,7 @@ def main(page: ft.Page):
     def gestionar_pdf(e):
         pdfm = PdfManager()
         print("Páginas:", pdfm.get_num_pages())
+        pdfm.print_mediabox()
         if pdfm.get_status() == "OK":
             # 2. Aplicar anotación y guardar con timestamp
             path_resultado = pdfm.crear_anotaciones()
