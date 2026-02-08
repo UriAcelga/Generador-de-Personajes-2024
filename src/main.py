@@ -8,6 +8,21 @@ def main(page: ft.Page):
 
     status_text = ft.Text("Presiona el botón para editar el PDF modelo", size=16)
     tiradas_text = ft.Text("Generar tiradas", size=16)
+
+    input_nombre = ft.TextField(
+        label="Nombre de personaje",
+        hint_text="Gandalf",
+        expand=True
+    )
+    select_clase = ft.Dropdown(
+        label="Clase",
+        options=[],
+    )
+    llenar_dropdown(select_clase, )
+
+    def llenar_dropdown(dropdown, opciones):
+        for opcion in opciones:
+            dropdown.options.append(opcion)
     
     def generar_personaje(e):
         data_pj = {"NVL": 3, "CLASE": "Guerrero"}
@@ -55,7 +70,13 @@ def main(page: ft.Page):
                 tiradas_text,
                 ft.IconButton(ft.Icons.ADD, on_click=generar_personaje),
             ],
-        )     
+        ),    
+        ft.Row(
+            controls=[
+                input_nombre,
+                select_clase,
+            ]
+        ) 
     )
 
 

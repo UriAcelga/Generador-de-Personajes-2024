@@ -1,4 +1,5 @@
 import numpy as np
+from dnddata import DndData
 
 """
 personaje = {
@@ -145,44 +146,10 @@ class Personaje:
         return tiradas
 
 
-    #Pasar estos datos relacionados a otra clase????
-    def get_trasfondos():
-        return {
-            "barbaro": ["Granjero", "Guía", "Soldado", "Marinero"],
-            "bardo": ["Charlatán", "Artista", "Noble", "Caminante"],
-            "brujo": ["Acólito", "Charlatán", "Ermitaño", "Mercader"],
-            "clerigo": ["Acólito", "Ermitaño", "Sabio", "Escribano"],
-            "druida": ["Guía", "Ermitaño", "Erudito", "Escribano", "Caminante"],
-            "explorador": ["Guía", "Criminal", "Caminante"],
-            "guerrero": ["Soldado", "Noble", "Guardia", "Granjero"],
-            "hechicero": ["Charlatán", "Ermitaño", "Sabio", "Acólito"],
-            "mago": ["Acólito", "Escribano", "Ermitaño", "Mercader"],
-            "monje": ["Guía", "Marinero"],
-            "paladin": ["Noble", "Soldado", "Acólito"],
-            "picaro": ["Criminal", "Charlatán", "Caminante"]
-        }
     
-    def get_clases():
-        return [
-            "barbaro",
-            "bardo",
-            "brujo",
-            "clerigo",
-            "druida",
-            "explorador",
-            "guerrero",
-            "hechicero",
-            "mago",
-            "monje",
-            "paladin",
-            "picaro"
-        ]
-    
-    def get_trasfondos_segun_clase(self, clase):
-        return self.get_trasfondos()[clase]
     
     def generar_trasfondo(self):
-        trasfondos = self.get_trasfondos_segun_clase(self.CLASE)
+        trasfondos = DndData.get_trasfondos_segun_clase(self.CLASE)
         i = self.rng.integers(low=0, high=len(trasfondos)).item()
         return trasfondos[i]
 
