@@ -1,0 +1,63 @@
+{
+    "clases": [
+        "Bárbaro",
+        "Bardo",
+        "Brujo",
+        "Clérigo",
+        "Druida",
+        "Explorador",
+        "Guerrero",
+        "Hechicero",
+        "Mago",
+        "Monje",
+        "Paladín",
+        "Pícaro"
+    ],
+    
+    "especies": [
+        "Aasimar",
+        "Dracónido", 
+        "Elfo", 
+        "Enano", 
+        "Gnomo", 
+        "Goliat", 
+        "Humano", 
+        "Mediano", 
+        "Orco", 
+        "Tiefling"
+    ],
+
+    "trasfondos": [
+        "Acólito",
+        "Animador",
+        "Artesano",
+        "Campesino",
+        "Charlatán",
+        "Comerciante",
+        "Criminal",
+        "Ermitaño",
+        "Erudito",
+        "Escriba",
+        "Guardia",
+        "Guía",
+        "Marinero",
+        "Noble",
+        "Soldado",
+        "Vagabundo"
+    ],       
+    
+    "Trasfondos-clases": {
+        "Barbaro": ["Campesino", "Guía", "Soldado", "Marinero"],
+        "Bardo": ["Charlatán", "Animador", "Noble", "Vagabundo"],
+        "Brujo": ["Acólito", "Charlatán", "Ermitaño", "Comerciante"],
+        "Clerigo": ["Acólito", "Ermitaño", "Erudito", "Escriba"],
+        "Druida": ["Guía", "Ermitaño", "Erudito", "Escriba", "Vagabundo"],
+        "Explorador": ["Guía", "Criminal", "Vagabundo"],
+        "Guerrero": ["Soldado", "Noble", "Guardia", "Campesino"],
+        "Hechicero": ["Charlatán", "Ermitaño", "Erudito", "Acólito"],
+        "Mago": ["Acólito", "Escriba", "Ermitaño", "Comerciante"],
+        "Monje": ["Guía", "Marinero"],
+        "Paladin": ["Noble", "Soldado", "Acólito"],
+        "Picaro": ["Criminal", "Charlatán", "Vagabundo"]
+    }
+}

@@ -1,0 +1,274 @@
+{
+    "aasimar": {
+        "nombre": "Aasimar",
+        "tiene_subespecie": false,
+        "rasgos": []
+    },
+    "draconido": {
+        "nombre": "Dracónido",
+        "tiene_subespecie": true,
+        "subespecies": {
+            "dragon-azul": {
+                "nombre": "Azul",
+                "tipo_daño": "Relámpago"
+            },
+            "dragon-blanco": {
+                "nombre": "Blanco",
+                "tipo_daño": "Frío"
+            },
+            "dragon-bronce": {
+                "nombre": "Bronce",
+                "tipo_daño": "Relámpago"
+            },
+            "dragon-cobre": {
+                "nombre": "Cobre",
+                "tipo_daño": "Ácido"
+            },
+            "dragon-negro": {
+                "nombre": "Negro",
+                "tipo_daño": "Ácido"
+            },
+            "dragon-oro": {
+                "nombre": "Oro",
+                "tipo_daño": "Fuego"
+            },
+            "dragon-oropel": {
+                "nombre": "Oropel",
+                "tipo_daño": "Fuego"
+            },
+            "dragon-plata": {
+                "nombre": "Plata",
+                "tipo_daño": "Frío"
+            },
+            "dragon-rojo": {
+                "nombre": "Rojo",
+                "tipo_daño": "Fuego"
+            },
+            "dragon-verde": {
+                "nombre": "Verde",
+                "tipo_daño": "Veneno"
+            }
+        },
+        "rasgos": []
+    },
+    "elfo": {
+        "nombre": "Elfo",
+        "tiene_subespecie": true,
+        "subespecies": {
+            "alto-elfo": {
+                "nombre": "Alto Elfo",
+                "1": {
+                    "hechizos": ["prestidigitacion"]
+                },
+                "3": {
+                    "hechizos": ["detectar-magia"]
+                },
+                "5": {
+                    "hechizos": ["paso-brumoso"]
+                }
+            },
+            "drow": {
+                "nombre": "Drow",
+                "1": {
+                    "hechizos": ["luces-danzantes"],
+                    "dark-vision": 120
+                },
+                "3": {
+                    "hechizos": ["fuego-feerico"]
+                },
+                "5": {
+                    "hechizos": ["oscuridad"]
+                }
+            },
+            "elfo-del-bosque": {
+                "nombre": "Elfo del bosque",
+                "1": {
+                    "hechizos": ["saber-druidico"],
+                    "velocidad": 35
+                },
+                "3": {
+                    "hechizos": ["zancada-prodigiosa"]
+                },
+                "5": {
+                    "hechizos": ["pasar-sin-rastro"]
+                }
+            }
+        },
+        "rasgos": []
+    },
+    "enano": {
+        "nombre": "Enano",
+        "tiene_subespecie": false,
+        "rasgos": []
+    },
+    "gnomo": {
+        "nombre": "Gnomo",
+        "tiene_subespecie": true,
+        "subespecies": {
+            "gnomo-roca": {
+                "nombre": "Gnomo de las rocas",
+                "hechizos": ["prestidigitacion", "reparar"],
+                "rasgos": {
+                    "artilugio": {
+                        "nombre": "Artilugio de Prestidigitación",
+                        "tiempo_de_lanzamiento": "10 min",
+                        "duracion": "8 hrs",
+                        "descripcion": "Crea un objeto Diminuto (CA 5, 1 pg) que replica un efecto de prestidigitación. Se activa con Acción Adicional (toque). Máx. 3 activos."
+                    }
+                }
+            },
+            "gnomo-bosque": {
+                "nombre": "Gnomo de los bosques",
+                "hechizos": ["ilusion-menor", "hablar-con-los-animales"],
+                "rasgos": {
+                    "hablar-con-animales": {
+                        "nombre": "Hablar con los animales",
+                        "usos": "competencia",
+                        "descripcion": "Lanza el hechizo sin gastar espacio de conjuro tantas veces como tu Bonificador por Competencia (Descanso Largo)."
+                    }
+                }
+            }
+        },        
+        "rasgos": []
+    },
+    "goliat": {
+        "nombre": "Goliat",
+        "tiene_subespecie": true,
+        "subespecies": {
+            "gigante-fuego": {
+                "nombre": "Gigante de fuego",
+                "rasgos": {
+                    "abrasion-de-fuego": {
+                        "nombre": "Abrasión de Fuego",
+                        "descripcion": "Cuando aciertes a un objetivo con una tirada de ataque y le causes daño, también puedes causarle 1d10 de daño de fuego."
+                    }
+                } 
+            },
+            "gigante-colina": {
+                "nombre": "Gigante de las colinas",
+                "rasgos": {
+                    "caida-de-colinas": {
+                        "nombre": "Caída de las colinas",
+                        "descripcion": "Cuando aciertes a un objetivo con una tirada de ataque y le causes daño, inflige el estado de derribado."
+                    }
+                } 
+            },
+            "gigante-nubes": {
+                "nombre": "Gigante de las nubes",
+                "rasgos": {
+                    "excursion-de-nubes": {
+                        "nombre": "Excursión de las nubes",
+                        "tiempo_de_lanzamiento": "accion_adicional",
+                        "descripcion": "Te teletransportas mágicamente hasta 30ft a un espacio sin ocupar que puedas ver."
+                    }
+                } 
+            },
+            "gigante-escarcha": {
+                "nombre": "Gigante de escarcha",
+                "rasgos": {
+                    "frio-de-escarcha": {
+                        "nombre": "Frío de la escarcha",
+                        "descripcion": "Cuando aciertes a un objetivo con una tirada de ataque y le causes daño, también puedes causarle 1d6 de daño de frío y reducir su velocidad en 10ft hasta el principio de tu siguiente turno."
+                    }
+                } 
+            },
+            "gigante-piedra": {
+                "nombre": "Gigante de piedra",
+                "rasgos": {
+                    "resistencia-de-piedra": {
+                        "nombre": "Resistencia de la piedra",
+                        "tiempo_de_lanzamiento": "reaccion",
+                        "descripcion": "Cuando recibas daño, puedes tirar un 1d12. Suma tu modificador por Constitución al resultado y reduce el daño en ese total."
+                    }
+                } 
+            },
+            "gigante-tormenta": {
+                "nombre": "Gigante de las tormentas",
+                "rasgos": {
+                    "trueno-de-tormenta": {
+                        "nombre": "Trueno de la tormenta",
+                        "tiempo_de_lanzamiento": "reaccion",
+                        "descripcion": "Cuando una criatura que esté a 18 m o menos de ti te cause daño, puedes infligirle 1d8 de daño de trueno."
+                    }
+                } 
+            }
+        },
+        "rasgos": []
+    },
+    "humano": {
+        "nombre": "Humano",
+        "tiene_subespecie": false,
+        "rasgos": []
+    },
+    "mediano": {
+        "nombre": "Mediano",
+        "tiene_subespecie": false,
+        "rasgos": []
+    },
+    "orco": {
+        "nombre": "Orco",
+        "tiene_subespecie": false,
+        "rasgos": []
+    },
+    "tiefling": {
+        "nombre": "Tiefling",
+        "tiene_subespecie": true,
+        "subespecies": {
+            "abisal": {
+                "nombre": "Abisal",
+                "1": {
+                    "hechizos": ["rociada-venenosa"],
+                    "rasgos": {
+                        "resistencia-veneno": {
+                            "nombre": "Resistencia al veneno",
+                            "descripcion": "Tienes resistencia al daño de veneno."
+                        }
+                    }
+                },
+                "3": {
+                    "hechizos": ["rayo-nauseabundo"]
+                },
+                "5": {
+                    "hechizos": ["inmovilizar-persona"]
+                }
+            },
+            "ctonico": {
+                "nombre": "Ctónico",
+                "1": {
+                    "hechizos": ["toque-helado"],
+                    "rasgos": {
+                        "resistencia-necrotico": {
+                            "nombre": "Resistencia necrótica",
+                            "descripcion": "Tienes resistencia al daño necrótico."
+                        }
+                    }
+                },
+                "3": {
+                    "hechizos": ["falsa-vida"]
+                },
+                "5": {
+                    "hechizos": ["rayo-debilitador"]
+                }
+            },
+            "infernal": {
+                "nombre": "Infernal",
+                "1": {
+                    "hechizos": ["descarga-de-fuego"],
+                    "rasgos": {
+                        "resistencia-fuego": {
+                            "nombre": "Resistencia al fuego",
+                            "descripcion": "Tienes resistencia al daño de fuego."
+                        }
+                    }
+                },
+                "3": {
+                    "hechizos": ["reprension-infernal"]
+                },
+                "5": {
+                    "hechizos": ["oscuridad"]
+                }
+            }
+        },
+        "rasgos": []
+    }
+}
